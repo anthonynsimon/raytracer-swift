@@ -42,7 +42,7 @@ func timeit<T>(_ block: () -> T) -> (T, UInt) {
 
 func randomInUnitSphere() -> Vec3 {
     while true {
-        let p = Vec3.random(range: -1.0...1.0)
+        let p = Vec3.random(range: -1.0 ... 1.0)
         if p.lenSqrt() >= 1 {
             continue
         }
@@ -52,7 +52,7 @@ func randomInUnitSphere() -> Vec3 {
 
 func randomInUnitDisk() -> Vec3 {
     while true {
-        let p = Vec3(x: Float64.random(in: -1...1), y: Float64.random(in: -1...1), z: 0.0)
+        let p = Vec3(x: Float64.random(in: -1 ... 1), y: Float64.random(in: -1 ... 1), z: 0.0)
         if p.lenSqrt() >= 1 {
             continue
         }
@@ -61,10 +61,10 @@ func randomInUnitDisk() -> Vec3 {
 }
 
 func randomUnitVector() -> Vec3 {
-    let a = Float64.random(in: 0.0...2.0*Float64.pi)
-    let z = Float64.random(in: -1.0...1.0)
-    let r = sqrt(1.0 - z*z)
-    return Vec3(x: r*cos(a), y: r*sin(a), z: z)
+    let a = Float64.random(in: 0.0 ... 2.0 * Float64.pi)
+    let z = Float64.random(in: -1.0 ... 1.0)
+    let r = sqrt(1.0 - z * z)
+    return Vec3(x: r * cos(a), y: r * sin(a), z: z)
 }
 
 extension Float64 {
@@ -86,5 +86,5 @@ func reflect(v: Vec3, normal: Vec3) -> Vec3 {
 
 func schlick(cosine: Float64, refractiveIndex: Float64) -> Float64 {
     let r0 = pow((1.0 - refractiveIndex) / (1.0 + refractiveIndex), 2.0)
-    return r0 + (1.0 - r0) * pow((1.0 - cosine), 5)
+    return r0 + (1.0 - r0) * pow(1.0 - cosine, 5)
 }

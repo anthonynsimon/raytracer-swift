@@ -9,7 +9,7 @@
 struct Ray {
     let origin: Vec3
     let direction: Vec3
-    
+
     func at(t: Float64) -> Vec3 {
         return origin + (direction * t)
     }
@@ -18,7 +18,7 @@ struct Ray {
         if depth <= 0 {
             return black
         }
-        
+
         // We hit an object (use small positive tMin to ignore hits due to floating point errors near 0.0
         if let hit = scene.hit(ray: self, tMin: 0.01, tMax: Float64.infinity) {
             if let materialHit = hit.material.scatter(ray: self, hit: hit) {
@@ -26,7 +26,7 @@ struct Ray {
             }
             return black
         }
-        
+
         // No object hit
         let unitDirection = direction.unitVector()
         let t = (unitDirection.y + 1.0) * 0.5

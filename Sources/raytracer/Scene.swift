@@ -6,15 +6,15 @@
 //  Copyright © 2020 Anthony Najjar Simon. All rights reserved.
 //
 
-class Scene : Hittable {
+class Scene: Hittable {
     let camera: Camera
-    
+
     init(camera: Camera) {
         self.camera = camera
     }
-    
+
     private var hittables: [Hittable] = []
-    
+
     func hit(ray: Ray, tMin: Float64, tMax: Float64) -> Hit? {
         var closest: Hit?
         for hittable in hittables {
@@ -25,11 +25,11 @@ class Scene : Hittable {
         }
         return closest
     }
-    
+
     func add(_ items: Hittable...) {
         hittables.append(contentsOf: items)
     }
-    
+
     func clear() {
         hittables.removeAll()
     }

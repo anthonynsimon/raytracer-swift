@@ -12,7 +12,7 @@ struct Hit {
     let normal: Vec3
     let frontFace: Bool
     let material: Material
-};
+}
 
 protocol Hittable {
     func hit(ray: Ray, tMin: Float64, tMax: Float64) -> Hit?
