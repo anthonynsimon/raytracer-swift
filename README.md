@@ -1,5 +1,7 @@
 # raytracer-swift
 
+![Example image 64 samples per pixel](assets/example-64-spp.png)
+
 Zero-dependency, concurrent raytracer written in Swift. A simple weekend experiment following the excellent book at https://raytracing.github.io/.
 
 Features:
@@ -8,6 +10,8 @@ Features:
 - Configurable antialiasing.
 - Optimized to make use of all available cores.
 - Outputs Portable Bitmap Format files.
+
+This raytracer runs entirely in the CPU. At some point I might add SIMD or GPU support for learning purposes, but being ultra-performant is not the main priority.
 
 Usage:
 
@@ -37,3 +41,7 @@ You can configure the quality via the `samplesPerPixel` parameter.
 ### Samples per pixel: 32
 
 ![Example image 32 samples per pixel](assets/example-32-spp.png)
+
+### Samples per pixel: 64
+
+![Example image 64 samples per pixel](assets/example-64-spp.png)
