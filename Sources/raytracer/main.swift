@@ -85,7 +85,7 @@ func main() {
     
     let cores = ProcessInfo().activeProcessorCount
     
-    log("Rendering using all available cores: \(cores)")
+    print("Rendering using all available cores: \(cores)")
     let (image, tookMillis) = timeit {
         return renderer.render(width: width,
                                height: height,
@@ -93,14 +93,17 @@ func main() {
                                samplesPerPixel: samplesPerPixel,
                                maxDepth: maxDepth)
     }
-    log("Rendering took \(tookMillis) ms")
+    print("Rendering took \(tookMillis) ms")
 
-    log("Writing image in Portable Bitmap Format")
-    let header = "P3\n\(width) \(height)\n255\n"
-    write(header)
-    write(image.map({ $0.toRGBLine() }))
+    print("Writing image in Portable Bitmap Format")
     
-    log("Done")
+    let filepath = URL(fileURLWithPath: "result.ppm")
+    let header = ["P3\n\(width) \(height)\n255\n"]
+    let contents = image.map({ $0.toRGBLine() })
+    let data = (header + contents).joined(separator: "")
+    try! data.write(to: filepath, atomically: true, encoding: String.Encoding.utf8)
+    
+    print("Done, result at \(filepath.absoluteString)")
 }
 
 main()
