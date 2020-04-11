@@ -8,7 +8,7 @@
 
 import Foundation
 
-func buildScene(width: Int, height: Int) -> Scene {
+func buildScene(width: Int, height: Int, addRandomSpheres: Bool = false) -> Scene {
     let aspect = Float64(width) / Float64(height)
     
     let vfov = 20.0
@@ -45,30 +45,37 @@ func buildScene(width: Int, height: Int) -> Scene {
         // "Ground"
         Sphere(center: Vec3(x: 0, y: -1000, z: -1), radius: 1000, material: defaultLambert)
     )
-
-    for x in stride(from: -6, to: 6, by: 1) {
-        for z in stride(from: -9, to: 3, by: 2){
-            scene.add(
-                {
-                    let radius = Float64.random(in: 0.1...0.4)
-                    
-                    let mat: Material = {
-                        let rand = Int.random(in: 0...2)
-                        switch rand {
-                        case 0: return Metal(albedo: Vec3(x: Float64.random(in: 0...1), y: Float64.random(in: 0...1), z: Float64.random(in: 0...1)), fuzz: Float64.random(in: 0...1))
-                        case 1: return Lambertian(albedo: Vec3(x: Float64.random(in: 0...1), y: Float64.random(in: 0...1), z: Float64.random(in: 0...1)))
-                        case 2: return Dielectric(refractiveIndex: Float64.random(in: 1..<3))
-                        default: return defaultLambert
-                        }
+    
+    if addRandomSpheres {
+        for x in stride(from: -6, to: 6, by: 1) {
+            for z in stride(from: -9, to: 3, by: 2){
+                scene.add(
+                    {
+                        let radius = Float64.random(in: 0.1...0.4)
+    
+                        let mat: Material = {
+                            let rand = Int.random(in: 0...2)
+                            switch rand {
+                            case 0: return Metal(albedo: Vec3(x: Float64.random(in: 0...1),
+                                                              y: Float64.random(in: 0...1),
+                                                              z: Float64.random(in: 0...1)),
+                                                 fuzz: Float64.random(in: 0...1))
+                            case 1: return Lambertian(albedo: Vec3(x: Float64.random(in: 0...1),
+                                                                   y: Float64.random(in: 0...1),
+                                                                   z: Float64.random(in: 0...1)))
+                            case 2: return Dielectric(refractiveIndex: Float64.random(in: 1..<3))
+                            default: return defaultLambert
+                            }
+                        }()
+    
+                        return Sphere(center: Vec3(x: Float64(x) + Float64.random(in: -0.1...0.1),
+                                                   y: radius,
+                                                   z: Float64(z) + Float64.random(in: -0.1...0.1)),
+                                      radius: radius,
+                                      material: mat)
                     }()
-                    
-                    return Sphere(center: Vec3(x: Float64(x) + Float64.random(in: -0.1...0.1),
-                                               y: radius,
-                                               z: Float64(z) + Float64.random(in: -0.1...0.1)),
-                                  radius: radius,
-                                  material: mat)
-                }()
-            )
+                )
+            }
         }
     }
 
