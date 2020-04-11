@@ -24,33 +24,33 @@ func buildScene(width: Int, height: Int) -> Scene {
     let scene = Scene(camera: camera)
     
     let blueLambert = Lambertian(albedo: Vec3(x: 0.25, y: 0.25, z: 1.0))
-    let greenLambert = Lambertian(albedo: Vec3(x: 0.3, y: 0.8, z: 0.2))
+    let greenLambert = Lambertian(albedo: Vec3(x: 0.3, y: 0.7, z: 0.25))
     let defaultLambert = Lambertian(albedo: Vec3(x: 0.5, y: 0.5, z: 0.5))
-    let metal = Metal(albedo: Vec3(x: 0.8, y: 0.8, z: 0.8), fuzz: 0.45)
-    let fuzzyMetal = Metal(albedo: Vec3(x: 0.1, y: 0.1, z: 0.1), fuzz: 1.0)
-    let fuzzyRedMetal = Metal(albedo: Vec3(x: 1.0, y: 0.0, z: 0.0), fuzz: 1.0)
-    let gold = Metal(albedo: Vec3(x: 0.6, y: 0.4, z: 0.0), fuzz: 1.0)
-    let refractive = Dielectric(refractiveIndex: 1.5)
+    let metal = Metal(albedo: Vec3(x: 0.88, y: 0.88, z: 0.88), fuzz: 0.1)
+    let fuzzyDarkMetal = Metal(albedo: Vec3(x: 0.05, y: 0.05, z: 0.05), fuzz: 1.0)
+    let fuzzyRedMetal = Metal(albedo: Vec3(x: 0.8, y: 0.0, z: 0.0), fuzz: 1.0)
+    let gold = Metal(albedo: Vec3(x: 0.9, y: 0.4, z: 0.0), fuzz: 1.0)
+    let refractive = Dielectric(refractiveIndex: 1.15)
     
 
     scene.add(
-        Sphere(center: Vec3(x: 0, y: 0.8, z: 0), radius: 0.8, material: metal),
-        Sphere(center: Vec3(x: -2, y: 0.5, z: -3), radius: 0.5, material: blueLambert),
-        Sphere(center: Vec3(x: 2, y: 0.25, z: -6), radius: 0.25, material: greenLambert),
-        Sphere(center: Vec3(x: 1.4, y: 0.6, z: 2.7), radius: 0.6, material: gold),
-        Sphere(center: Vec3(x: 2.3, y: 0.35, z: -2.7), radius: 0.35, material: fuzzyRedMetal),
-        Sphere(center: Vec3(x: -1.5, y: 0.35, z: 0.8), radius: 0.35, material: fuzzyMetal),
-        Sphere(center: Vec3(x: -1.1, y: 0.18, z: -0.5), radius: 0.18, material: refractive),
+        Sphere(center: Vec3(x: 0, y: 0.8, z: 0), radius: 0.8, material: blueLambert),
+        Sphere(center: Vec3(x: -2, y: 0.5, z: -3), radius: 0.5, material: fuzzyRedMetal),
+        Sphere(center: Vec3(x: 2, y: 0.55, z: -6), radius: 0.55, material: greenLambert),
+        Sphere(center: Vec3(x: 1.4, y: 0.55, z: 2.8), radius: 0.55, material: gold),
+        Sphere(center: Vec3(x: 2.3, y: 0.68, z: -2.7), radius: 0.68, material: metal),
+        Sphere(center: Vec3(x: -1.4, y: 0.48, z: 1.4), radius: 0.48, material: fuzzyDarkMetal),
+        Sphere(center: Vec3(x: -1.05, y: 1, z: 0), radius: 0.38, material: refractive),
 
         // "Ground"
         Sphere(center: Vec3(x: 0, y: -1000, z: -1), radius: 1000, material: defaultLambert)
     )
 
-    for x in stride(from: -6, to: 6, by: 2) {
-        for z in stride(from: -16, to: 16, by: 4){
+    for x in stride(from: -6, to: 6, by: 1) {
+        for z in stride(from: -9, to: 3, by: 2){
             scene.add(
                 {
-                    let radius = Float64.random(in: 0.2...0.6)
+                    let radius = Float64.random(in: 0.1...0.4)
                     
                     let mat: Material = {
                         let rand = Int.random(in: 0...2)
@@ -77,8 +77,8 @@ func buildScene(width: Int, height: Int) -> Scene {
 
 func main() {
     let (width, height) = (400, 200)
-    let maxDepth = 10
-    let samplesPerPixel = 64
+    let maxDepth = 50
+    let samplesPerPixel = 4
     
     let scene = buildScene(width: width, height: height)
     let renderer = Renderer(scene: scene)
