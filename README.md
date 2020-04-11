@@ -18,7 +18,13 @@ Usage:
 Setup your scene in the `main.swift` file and run:
 
 ```
-swift run > result.ppm
+$ swift run
+
+[12/12] Linking raytracer
+Rendering using all available cores: 8
+Rendering took 2622 ms
+Writing image in Portable Bitmap Format
+Done, result at ~/src/raytracer-swift/result.ppm
 ```
 
 ## Samples per pixel
